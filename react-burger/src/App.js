@@ -8,7 +8,8 @@ const app = props =>{
       {name: "Venu" , age:"234"},
       {name:"gopal", age:"2132"},
       {name:"hegde", age:"999"}
-    ]
+    ],
+    showPersons: false
   })
 
   const switchNmaeHandler = (newName)=>{
@@ -29,6 +30,19 @@ const app = props =>{
     })
   }
 
+  const togglePersonHandler = ()=>{
+       const doesShow = personsState.showPersons;
+       setPersonsState(
+         {
+          persons: [
+            {name: "Venu" , age:"234"},
+            {name:"hegde", age:"2132"},
+            {name: "gopal", age:"999"}],
+            showPersons: !doesShow
+         }
+       )
+  }
+
   const style = {
     backgroundColor : 'white',
     font : 'inherit',
@@ -36,16 +50,37 @@ const app = props =>{
     padding: '8px',
     cursor : 'pointer'
   }
+
+  let persons = null;
+  if(personsState.showPersons){
+    persons = (
+      <div>
+
+      <Person name={personsState.persons[0].name}
+        age={personsState.persons[0].age}/>
+
+       <Person name={personsState.persons[1].name}
+        age={personsState.persons[1].age}/>
+       
+       <Person name={personsState.persons[2].name}
+        age={personsState.persons[2].age} 
+        click={switchNmaeHandler.bind(this,'gopalhegde')}
+        changed={nameChangeHandler}>
+          Iah fine
+       </Person>
+
+      </div> 
+    )
+  }
     return (
       <div className="App">
         <h1> Hi Iam react developer</h1>
-        <button onClick={switchNmaeHandler.bind(this,'Venugopalhegde')} style={style}> Switch Name</button>
-        <Person name={personsState.persons[0].name} age={personsState.persons[0].age}/>
-        <Person name={personsState.persons[1].name} age={personsState.persons[1].age}/>
-        <Person name={personsState.persons[2].name}
-         age={personsState.persons[2].age} 
-         click={switchNmaeHandler.bind(this,'gopalhegde')}
-         changed={nameChangeHandler}>Iah fine</Person>
+        <button onClick={togglePersonHandler} style={style}> Switch Name</button>
+       
+       
+        {persons}
+      
+      
         
       </div>
     );
