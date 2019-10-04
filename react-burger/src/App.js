@@ -55,21 +55,12 @@ const app = props =>{
   if(personsState.showPersons){
     persons = (
       <div>
-
-      <Person name={personsState.persons[0].name}
-        age={personsState.persons[0].age}/>
-
-       <Person name={personsState.persons[1].name}
-        age={personsState.persons[1].age}/>
-       
-       <Person name={personsState.persons[2].name}
-        age={personsState.persons[2].age} 
-        click={switchNmaeHandler.bind(this,'gopalhegde')}
-        changed={nameChangeHandler}>
-          Iah fine
-       </Person>
-
-      </div> 
+       {
+         personsState.persons.map(person =>{
+           return  <Person name={person.name} age={person.age} />
+         })
+       }
+      </div>
     )
   }
     return (
