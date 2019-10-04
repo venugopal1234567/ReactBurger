@@ -12,26 +12,10 @@ const app = props =>{
     showPersons: false
   })
 
-  const switchNmaeHandler = (newName)=>{
-    //console.log("was clicked")
-    setPersonsState({persons: [
-      {name: "Venu" , age:"234"},
-      {name:newName, age:"2132"},
-      {name:"hegde", age:"999"}
-    ]})
-  }
-
-  const nameChangeHandler = (event)=>{
-    setPersonsState({
-      persons: [
-        {name: "Venu" , age:"234"},
-        {name:"hegde", age:"2132"},
-        {name: event.target.value, age:"999"}]
-    })
-  }
-
+ 
   const togglePersonHandler = ()=>{
        const doesShow = personsState.showPersons;
+       console.log(doesShow)
        setPersonsState(
          {
           persons: [
@@ -41,8 +25,40 @@ const app = props =>{
             showPersons: !doesShow
          }
        )
+      console.log(personsState.showPersons)
+      
   }
 
+  const deletePersonHandler = (personIndex)=>{
+    const persons = personsState.persons;
+    persons.splice(personIndex, 1);
+    setPersonsState({
+       persons: persons,
+       showPersons: personsState.showPersons
+    })
+  }
+ 
+
+  let persons = null;
+  if(personsState.showPersons){
+    persons = (
+      <div>
+       {
+         personsState.persons.map((person ,index) =>{
+           console.log(index)
+           return  <Person
+            click={()=> deletePersonHandler(index)}
+            name={person.name} 
+            age={person.age} 
+            />
+         })
+       }
+      </div>
+    )
+  }
+
+  
+ 
   const style = {
     backgroundColor : 'white',
     font : 'inherit',
@@ -51,18 +67,6 @@ const app = props =>{
     cursor : 'pointer'
   }
 
-  let persons = null;
-  if(personsState.showPersons){
-    persons = (
-      <div>
-       {
-         personsState.persons.map(person =>{
-           return  <Person name={person.name} age={person.age} />
-         })
-       }
-      </div>
-    )
-  }
     return (
       <div className="App">
         <h1> Hi Iam react developer</h1>
