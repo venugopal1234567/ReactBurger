@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
-import './App.css';
+import classes from'./App.css';
 import Person from './Person/Person'
 
 
 const app = props =>{
-
-  const style = {
-    backgroundColor : 'green',
-    font : 'inherit',
-    border: '1px solid blue',
-    padding: '8px',
-    cursor : 'pointer',
-  }
 
 
  const [personsState, setPersonsState]= useState({
@@ -68,6 +60,7 @@ const app = props =>{
   }
 
   let persons = null;
+  let btnClass = '';
   if(personsState.showPersons){
     persons = (
       <div>
@@ -85,23 +78,23 @@ const app = props =>{
        }
       </div>
     )
-    style.backgroundColor = "red"
+    btnClass = classes.Red;
   }
 
   
-  const classes = [];
+  const assignedclasses = [];
   if(personsState.persons.length <=2){
-    classes.push('red');
+    assignedclasses.push(classes.red);
   }
   if(personsState.persons.length <=1){
-    classes.push('bold');
+    assignedclasses.push(classes.bold);
   }
 
     return (
-      <div className="App">
+      <div className={classes.App}>
         <h1> Hi Iam react developer</h1>
-        <p className={classes.join(' ')}>Its working!</p>
-        <button onClick={togglePersonHandler} style={style}> Switch Name</button>
+        <p className={assignedclasses.join(' ')}>Its working!</p>
+        <button onClick={togglePersonHandler} className={btnClass} > Switch Name</button>
        
        
         {persons}
