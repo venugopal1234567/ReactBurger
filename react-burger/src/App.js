@@ -1,8 +1,24 @@
 import React, { useState } from 'react';
+import Radium, {StyleRoot} from 'radium'
 import './App.css';
 import Person from './Person/Person'
 
+
 const app = props =>{
+
+  const style = {
+    backgroundColor : 'green',
+    font : 'inherit',
+    border: '1px solid blue',
+    padding: '8px',
+    cursor : 'pointer',
+    ':hover':{
+      backgroundColor: "lightgreen",
+      color:"black"
+    }
+  }
+
+
  const [personsState, setPersonsState]= useState({
     persons : [
       {id: "szsc",name: "Venu" , age:"234"},
@@ -59,6 +75,7 @@ const app = props =>{
   let persons = null;
   if(personsState.showPersons){
     persons = (
+      <StyleRoot>
       <div>
        {
          personsState.persons.map((person ,index) =>{
@@ -70,24 +87,31 @@ const app = props =>{
             changed= {(event)=>nameChangedHandler(event,person.id)}
             />
          })
+        
        }
       </div>
+      </StyleRoot>
     )
+    style.backgroundColor = "red"
+    style[':hover']={
+      backgroundColor: "salmon",
+      color:"white"
+    }
   }
 
   
- 
-  const style = {
-    backgroundColor : 'white',
-    font : 'inherit',
-    border: '1px solid blue',
-    padding: '8px',
-    cursor : 'pointer'
+  const classes = [];
+  if(personsState.persons.length <=2){
+    classes.push('red');
+  }
+  if(personsState.persons.length <=1){
+    classes.push('bold');
   }
 
     return (
       <div className="App">
         <h1> Hi Iam react developer</h1>
+        <p className={classes.join(' ')}>Its working!</p>
         <button onClick={togglePersonHandler} style={style}> Switch Name</button>
        
        
@@ -100,7 +124,7 @@ const app = props =>{
   //  return React.createElement('div',{className : 'App'},React.createElement('h1', null, "Hii is it working?"));
   }
 
-export default app;
+export default Radium(app);
 
 
 
