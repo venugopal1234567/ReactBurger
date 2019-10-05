@@ -5,9 +5,9 @@ import Person from './Person/Person'
 const app = props =>{
  const [personsState, setPersonsState]= useState({
     persons : [
-      {name: "Venu" , age:"234"},
-      {name:"gopal", age:"2132"},
-      {name:"hegde", age:"999"}
+      {id: "szsc",name: "Venu" , age:"234"},
+      {id:"dscs",name:"gopal", age:"2132"},
+      {id:"uyyyt",name:"hegde", age:"999"}
     ],
     showPersons: false
   })
@@ -15,22 +15,21 @@ const app = props =>{
  
   const togglePersonHandler = ()=>{
        const doesShow = personsState.showPersons;
-       console.log(doesShow)
        setPersonsState(
          {
           persons: [
-            {name: "Venu" , age:"234"},
-            {name:"hegde", age:"2132"},
-            {name: "gopal", age:"999"}],
+            {id: "szsc",name: "Venu" , age:"234"},
+            {id:"dscs",name:"hegde", age:"2132"},
+            {id:"uyyyt",name: "gopal", age:"999"}],
             showPersons: !doesShow
          }
        )
-      console.log(personsState.showPersons)
       
   }
 
   const deletePersonHandler = (personIndex)=>{
-    const persons = personsState.persons;
+    //const persons = personsState.persons;
+    const persons =[...personsState.persons];
     persons.splice(personIndex, 1);
     setPersonsState({
        persons: persons,
@@ -38,6 +37,24 @@ const app = props =>{
     })
   }
  
+  const nameChangedHandler = (event,id)=>{
+    const personIndex = personsState.persons.findIndex(p =>{
+      return p.id === id
+    })
+    const person = {
+      ...personsState.persons[personIndex]
+    }
+    person.name = event.target.value;
+
+  const persons = [...personsState.persons]
+  persons[personIndex] = person;
+    setPersonsState(
+      {
+       persons: persons,
+         showPersons: personsState.showPersons
+      }
+    )
+  }
 
   let persons = null;
   if(personsState.showPersons){
@@ -45,11 +62,12 @@ const app = props =>{
       <div>
        {
          personsState.persons.map((person ,index) =>{
-           console.log(index)
            return  <Person
             click={()=> deletePersonHandler(index)}
             name={person.name} 
             age={person.age} 
+            key={person.id}
+            changed= {(event)=>nameChangedHandler(event,person.id)}
             />
          })
        }
