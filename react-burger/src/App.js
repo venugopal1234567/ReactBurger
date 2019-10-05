@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Radium, {StyleRoot} from 'radium'
 import './App.css';
 import Person from './Person/Person'
 
@@ -12,10 +11,6 @@ const app = props =>{
     border: '1px solid blue',
     padding: '8px',
     cursor : 'pointer',
-    ':hover':{
-      backgroundColor: "lightgreen",
-      color:"black"
-    }
   }
 
 
@@ -75,7 +70,6 @@ const app = props =>{
   let persons = null;
   if(personsState.showPersons){
     persons = (
-      <StyleRoot>
       <div>
        {
          personsState.persons.map((person ,index) =>{
@@ -90,13 +84,8 @@ const app = props =>{
         
        }
       </div>
-      </StyleRoot>
     )
     style.backgroundColor = "red"
-    style[':hover']={
-      backgroundColor: "salmon",
-      color:"white"
-    }
   }
 
   
@@ -124,7 +113,7 @@ const app = props =>{
   //  return React.createElement('div',{className : 'App'},React.createElement('h1', null, "Hii is it working?"));
   }
 
-export default Radium(app);
+export default app;
 
 
 
