@@ -1,95 +1,98 @@
-import React, { useState } from 'react';
-import classes from'./App.css';
+import React, { Component } from 'react';
+import classes from './App.css';
 import Persons from '../Components/Persons/Persons'
 import Cockpit from '../Components/Cockpit/Cockpit'
 
-const app = props =>{
+class App extends Component {
 
 
- const [personsState, setPersonsState]= useState({
-    persons : [
-      {id: "szsc",name: "Venu" , age:"234"},
-      {id:"dscs",name:"gopal", age:"2132"},
-      {id:"uyyyt",name:"hegde", age:"999"}
+  state = {
+    persons: [
+      { id: "szsc", name: "Venu", age: "234" },
+      { id: "dscs", name: "gopal", age: "2132" },
+      { id: "uyyyt", name: "hegde", age: "999" }
     ],
     showPersons: false
-  })
-
- 
-  const togglePersonHandler = ()=>{
-       const doesShow = personsState.showPersons;
-       setPersonsState(
-         {
-          persons: [
-            {id: "szsc",name: "Venu" , age:"234"},
-            {id:"dscs",name:"hegde", age:"2132"},
-            {id:"uyyyt",name: "gopal", age:"999"}],
-            showPersons: !doesShow
-         }
-       )
-      
   }
 
-  const deletePersonHandler = (personIndex)=>{
+
+
+
+  togglePersonHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({ showPersons: !doesShow })
+  }
+
+  deletePersonHandler = (personIndex) => {
     //const persons = personsState.persons;
-    const persons =[...personsState.persons];
+    const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
-    setPersonsState({
-       persons: persons,
-       showPersons: personsState.showPersons
-    })
+    this.setState({ persons: persons })
   }
- 
-  const nameChangedHandler = (event,id)=>{
-    const personIndex = personsState.persons.findIndex(p =>{
+
+  nameChangedHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
       return p.id === id
     })
     const person = {
-      ...personsState.persons[personIndex]
+      ...this.state.persons[personIndex]
     }
     person.name = event.target.value;
 
-  const persons = [...personsState.persons]
-  persons[personIndex] = person;
-    setPersonsState(
-      {
-       persons: persons,
-         showPersons: personsState.showPersons
-      }
-    )
+    const persons = [...this.state.persons]
+    persons[personIndex] = person;
+    this.setState({ persons: persons })
   }
 
-  let persons = null;
-  
-  if(personsState.showPersons){
-    persons = <Persons  
-        persons = {personsState.persons}
-        clicked={deletePersonHandler}
-        changed={nameChangedHandler}/>
-      
-    
-  
+  componentDidMount(){
+    console.log('[App.js] ComponentDidMount')
   }
 
-  
- 
+  shouldComponentUpdate(nextProps, nextState){
+    console.log('[App.js] ShouldComponentUpdate')
+    return true;
+  }
+
+  componentDidUpdate(){
+    console.log('[App.js] ComponentDidUpdate')
+  }
+
+
+  render() {
+
+    let persons = null;
+
+    if (this.state.showPersons) {
+      persons = <Persons
+        persons={this.state.persons}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangedHandler} />
+    }
+
+
+
     return (
-      <div className={classes.App}>   
-        
+      <div className={classes.App}>
+
         <Cockpit
-         showPersons={personsState.showPersons}
-         persons={personsState.persons}
-         clicked={togglePersonHandler}
+          showPersons={this.state.showPersons}
+          persons={this.state.persons}
+          clicked={this.togglePersonHandler}
         />
         {persons}
-      
-        
+
+
       </div>
     );
-  //  return React.createElement('div',{className : 'App'},React.createElement('h1', null, "Hii is it working?"));
+
   }
 
-export default app;
+
+
+  //  return React.createElement('div',{className : 'App'},React.createElement('h1', null, "Hii is it working?"));
+}
+
+export default App;
 
 
 
